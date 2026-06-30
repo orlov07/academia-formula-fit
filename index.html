@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>Fórmula Fit — Academia especialista em treino feminino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#150821;
+    --bg-soft:#1D0E2C;
+    --surface:#241335;
+    --surface-2:#2C1740;
+    --violet:#9D4EDD;
+    --violet-deep:#6E2FB8;
+    --magenta:#E0218A;
+    --ink:#F8F1FB;
+    --muted:#B9A6CC;
+    --line:rgba(255,255,255,0.10);
+    --placeholder:#FFB454;
+    --max:1180px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    overflow-x:hidden;
+    width:100%;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  h1,h2,h3{ margin:0; font-family:'Anton', sans-serif; font-weight:400; letter-spacing:0.01em; line-height:1.02; }
+  p{ margin:0; }
+  button{ font-family:inherit; cursor:pointer; }
+  section{ position:relative; }
+
+  .wrap{
+    width:100%;
+    max-width:var(--max);
+    margin:0 auto;
+    padding-left:clamp(20px, 5vw, 56px);
+    padding-right:clamp(20px, 5vw, 56px);
+  }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--violet);
+  }
+
+  .placeholder{
+    color:var(--placeholder);
+    border-bottom:1px dashed rgba(255,180,84,0.55);
+    cursor:help;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(21,8,33,0.86);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+    gap:16px;
+  }
+  .logo{
+    font-family:'Anton', sans-serif;
+    font-size:20px;
+    letter-spacing:0.02em;
+    display:flex; align-items:center; gap:8px;
+    white-space:nowrap;
+  }
+  .logo span{ color:var(--magenta); }
+  .nav-links{
+    display:flex; align-items:center; gap:clamp(16px,2.4vw,32px);
+    font-size:14px; font-weight:600;
+  }
+  .nav-links a{ color:var(--muted); transition:color .2s ease; }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-cta{
+    background:var(--magenta);
+    color:#fff;
+    padding:10px 20px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.02em;
+    white-space:nowrap;
+    border:none;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .nav-cta:hover{ transform:translateY(-1px); box-shadow:0 10px 24px rgba(224,33,138,0.35); }
+  .burger{
+    display:none;
+    width:40px;height:40px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink);
+    align-items:center;justify-content:center;
+    flex-direction:column;
+    gap:4px;
+  }
+  .burger span{ width:18px; height:2px; background:var(--ink); display:block; border-radius:2px; }
+  .mobile-panel{
+    display:none;
+    flex-direction:column;
+    gap:2px;
+    padding:8px clamp(20px,5vw,56px) 20px;
+    border-top:1px solid var(--line);
+  }
+  .mobile-panel a{
+    padding:14px 4px;
+    font-size:15px;
+    font-weight:600;
+    color:var(--muted);
+    border-bottom:1px solid var(--line);
+  }
+  .mobile-panel.open{ display:flex; }
+
+  @media (max-width:860px){
+    .nav-links{ display:none; }
+    .burger{ display:flex; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-top:clamp(48px,8vw,88px);
+    padding-bottom:clamp(40px,6vw,72px);
+    background:
+      radial-gradient(ellipse at 85% -10%, rgba(157,78,221,0.35), transparent 55%),
+      radial-gradient(ellipse at 0% 100%, rgba(224,33,138,0.18), transparent 50%),
+      var(--bg);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:clamp(28px,5vw,56px);
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(40px,6.4vw,76px);
+    color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(95deg,var(--violet),var(--magenta));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-sub{
+    margin-top:18px;
+    font-size:clamp(15px,1.6vw,18px);
+    color:var(--muted);
+    max-width:46ch;
+    line-height:1.6;
+  }
+  .hero-eyebrow{ margin-bottom:18px; }
+  .hero-ctas{
+    margin-top:30px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:15px 26px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:14.5px;
+    border:1px solid transparent;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{ background:var(--magenta); color:#fff; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(224,33,138,0.32); }
+  .btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
+  .btn-ghost:hover{ border-color:var(--violet); color:var(--violet); }
+
+  .hero-media{ position:relative; }
+  .hero-photo-frame{
+    position:relative;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    aspect-ratio:4/5;
+    background:var(--surface);
+  }
+  .hero-photo-frame img{
+    width:100%; height:100%; object-fit:cover;
+    object-position:center 20%;
+  }
+  .hero-photo-frame::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(21,8,33,0.78) 0%, rgba(21,8,33,0) 42%);
+  }
+  .hero-badge{
+    position:absolute;
+    left:18px; bottom:18px;
+    z-index:2;
+    background:rgba(21,8,33,0.72);
+    border:1px solid rgba(255,255,255,0.18);
+    backdrop-filter:blur(6px);
+    border-radius:16px;
+    padding:14px 18px;
+    max-width:78%;
+  }
+  .hero-badge .num{
+    font-family:'Anton', sans-serif;
+    font-size:26px;
+    color:var(--ink);
+    display:block;
+  }
+  .hero-badge .lbl{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+  .hero-chip{
+    position:absolute;
+    top:18px; right:18px;
+    z-index:2;
+    background:var(--violet);
+    color:#fff;
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:8px 12px;
+    border-radius:999px;
+  }
+
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-media{ order:-1; }
+    .hero-photo-frame{ aspect-ratio:16/10; }
+  }
+
+  /* ---------- FORMULA STRIP (signature) ---------- */
+  .formula{
+    padding-top:clamp(36px,5vw,56px);
+    padding-bottom:clamp(36px,5vw,56px);
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .formula-eq{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:clamp(10px,2vw,22px);
+    text-align:center;
+  }
+  .formula-term{
+    font-family:'Anton', sans-serif;
+    font-size:clamp(18px,3vw,32px);
+    color:var(--ink);
+    letter-spacing:0.01em;
+  }
+  .formula-term small{
+    display:block;
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-top:4px;
+    font-weight:700;
+  }
+  .formula-op{
+    font-family:'Anton', sans-serif;
+    font-size:clamp(18px,3vw,32px);
+    color:var(--violet);
+  }
+  .formula-result{ color:var(--magenta); }
+
+  /* ---------- SECTION HEADINGS ---------- */
+  .section{ padding-top:clamp(56px,8vw,96px); padding-bottom:clamp(56px,8vw,96px); }
+  .section-head{ max-width:640px; margin-bottom:clamp(32px,5vw,56px); }
+  .section-head h2{
+    font-size:clamp(30px,4.4vw,48px);
+    margin-top:10px;
+  }
+  .section-head p{
+    margin-top:14px;
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.6;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:clamp(28px,5vw,64px);
+    align-items:center;
+  }
+  .about-photo{
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    aspect-ratio:1/1;
+  }
+  .about-photo img{ width:100%; height:100%; object-fit:cover; }
+  .about-list{ margin-top:24px; display:flex; flex-direction:column; gap:16px; }
+  .about-item{ display:flex; gap:14px; align-items:flex-start; }
+  .about-item .dot{
+    flex:none;
+    width:34px; height:34px;
+    border-radius:10px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--violet);
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    font-weight:700;
+  }
+  .about-item h3{ font-family:'Manrope',sans-serif; font-weight:800; font-size:16px; color:var(--ink); }
+  .about-item p{ margin-top:4px; color:var(--muted); font-size:14.5px; line-height:1.6; }
+
+  @media (max-width:860px){
+    .about-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- MODALIDADES ---------- */
+  .cards-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .card:hover{ transform:translateY(-4px); border-color:var(--violet); }
+  .card-photo{ aspect-ratio:4/3; overflow:hidden; }
+  .card-photo img{ width:100%; height:100%; object-fit:cover; }
+  .card-body{ padding:20px 20px 24px; }
+  .card-body h3{ font-family:'Manrope',sans-serif; font-weight:800; font-size:18px; color:var(--ink); }
+  .card-body p{ margin-top:8px; font-size:14px; color:var(--muted); line-height:1.6; }
+
+  @media (max-width:900px){ .cards-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .cards-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- PLANOS ---------- */
+  .plans-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    align-items:stretch;
+  }
+  .plan{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:30px 26px;
+    display:flex;
+    flex-direction:column;
+  }
+  .plan.is-featured{
+    background:linear-gradient(165deg, var(--surface-2), var(--surface));
+    border-color:var(--violet);
+    position:relative;
+  }
+  .plan.is-featured::before{
+    content:"MAIS ESCOLHIDO";
+    position:absolute;
+    top:-12px; left:26px;
+    background:var(--violet);
+    color:#fff;
+    font-family:'Space Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.08em;
+    padding:6px 12px;
+    border-radius:999px;
+  }
+  .plan h3{ font-family:'Manrope',sans-serif; font-weight:800; font-size:18px; }
+  .plan .price{
+    margin-top:14px;
+    font-family:'Anton', sans-serif;
+    font-size:34px;
+    color:var(--ink);
+  }
+  .plan .price span{ font-family:'Space Mono', monospace; font-size:13px; color:var(--muted); }
+  .plan ul{ margin-top:18px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .plan li{ font-size:14px; color:var(--muted); padding-left:22px; position:relative; }
+  .plan li::before{
+    content:"✓";
+    position:absolute; left:0; top:0;
+    color:var(--violet);
+    font-weight:700;
+  }
+  .plan .btn{ margin-top:24px; justify-content:center; width:100%; }
+
+  @media (max-width:900px){ .plans-grid{ grid-template-columns:1fr; } .plan.is-featured{ order:-1; } }
+
+  /* ---------- DEPOIMENTOS ---------- */
+  .testi-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  .testi{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:26px;
+  }
+  .testi p.quote{
+    font-size:15px;
+    line-height:1.65;
+    color:var(--ink);
+  }
+  .testi-author{
+    margin-top:18px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .testi-avatar{
+    width:42px;height:42px;border-radius:50%;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Anton',sans-serif;
+    color:var(--violet);
+    flex:none;
+  }
+  .testi-author .name{ font-weight:800; font-size:14px; color:var(--ink); }
+  .testi-author .role{ font-size:12px; color:var(--muted); }
+
+  @media (max-width:900px){ .testi-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- LOCALIZAÇÃO / CONTATO ---------- */
+  .contact{
+    background:var(--surface);
+    border-top:1px solid var(--line);
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(28px,5vw,56px);
+    align-items:start;
+  }
+  .info-row{
+    display:flex; gap:14px; padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .info-row:first-child{ padding-top:0; }
+  .info-row .ico{
+    flex:none; width:38px;height:38px;border-radius:10px;
+    background:var(--surface-2); border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--violet); font-size:16px;
+  }
+  .info-row h3{ font-family:'Manrope',sans-serif; font-weight:800; font-size:14px; color:var(--ink); }
+  .info-row p{ margin-top:4px; font-size:14px; color:var(--muted); line-height:1.55; }
+  .map-box{
+    border-radius:18px;
+    border:1px dashed rgba(255,255,255,0.18);
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0 12px, transparent 12px 24px),
+      var(--surface-2);
+    aspect-ratio:4/3;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:8px;
+    padding:24px;
+  }
+  .map-box .pin{ font-size:30px; }
+  .map-box .lbl{ font-family:'Space Mono', monospace; font-size:12px; color:var(--muted); letter-spacing:0.04em; }
+
+  @media (max-width:860px){ .contact-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- CTA FINAL ---------- */
+  .final-cta{
+    text-align:center;
+    padding-top:clamp(56px,8vw,96px);
+    padding-bottom:clamp(56px,8vw,96px);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(157,78,221,0.30), transparent 60%),
+      var(--bg);
+  }
+  .final-cta h2{ font-size:clamp(28px,5vw,52px); max-width:18ch; margin:0 auto; }
+  .final-cta p{ margin-top:16px; color:var(--muted); font-size:16px; }
+  .final-cta .hero-ctas{ justify-content:center; margin-top:30px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:40px; padding-bottom:32px;
+  }
+  .footer-grid{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:24px;
+  }
+  .footer-brand .logo{ margin-bottom:10px; }
+  .footer-brand p{ color:var(--muted); font-size:13px; max-width:34ch; line-height:1.6; }
+  .footer-links{ display:flex; gap:48px; flex-wrap:wrap; }
+  .footer-col h4{
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:12px;
+  }
+  .footer-col a{
+    display:block; font-size:14px; color:var(--ink); opacity:0.85;
+    padding:5px 0;
+  }
+  .footer-bottom{
+    margin-top:36px; padding-top:20px; border-top:1px solid var(--line);
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;
+    font-size:12.5px; color:var(--muted);
+  }
+
+  ::selection{ background:var(--violet); color:#fff; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#topo" class="logo">FÓRMULA<span>FIT</span></a>
+    <nav class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#modalidades">Modalidades</a>
+      <a href="#formula">A Fórmula</a>
+      <a href="#planos">Planos</a>
+      <a href="#depoimentos">Alunas</a>
+      <a href="#contato">Localização</a>
+    </nav>
+    <a href="#" class="nav-cta" id="navCtaBtn">Matricule-se</a>
+    <button class="burger" id="burgerBtn" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#sobre">Sobre</a>
+    <a href="#modalidades">Modalidades</a>
+    <a href="#formula">A Fórmula</a>
+    <a href="#planos">Planos</a>
+    <a href="#depoimentos">Alunas</a>
+    <a href="#contato">Localização</a>
+    <a href="#" id="mobileCtaBtn">Matricule-se</a>
+  </div>
+</header>
+
+<main id="topo">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow hero-eyebrow">Academia em <span class="placeholder" title="Confirmar cidade/bairro">[Recreio/Laranjal — inserir cidade]</span> · especialista em treino feminino</div>
+        <h1>SEU OBJETIVO.<br>NOSSA <em>FÓRMULA</em>.</h1>
+        <p class="hero-sub">Treino pensado de verdade pra mulher: acompanhamento próximo, ambiente acolhedor e um plano que respeita o seu ritmo — da primeira ficha até o resultado que você foi buscar.</p>
+        <div class="hero-ctas">
+          <a href="#" class="btn btn-primary">💬 Matricule-se no WhatsApp</a>
+          <a href="#planos" class="btn btn-ghost">Ver planos</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="hero-chip">Treino Feminino</div>
+        <div class="hero-photo-frame">
+          <img src="https://images.pexels.com/photos/416754/pexels-photo-416754.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Aluna treinando com acompanhamento na Fórmula Fit" loading="eager">
+        </div>
+        <div class="hero-badge">
+          <span class="num">+390</span>
+          <span class="lbl">treinos compartilhados com a comunidade</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULA SIGNATURE -->
+  <section class="formula" id="formula">
+    <div class="wrap">
+      <div class="formula-eq">
+        <span class="formula-term">DISCIPLINA<small>treino certo</small></span>
+        <span class="formula-op">+</span>
+        <span class="formula-term">ACOMPANHAMENTO<small>nunca sozinha</small></span>
+        <span class="formula-op">+</span>
+        <span class="formula-term">COMUNIDADE<small>rede que apoia</small></span>
+        <span class="formula-op">=</span>
+        <span class="formula-term formula-result">RESULTADO</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="section" id="sobre">
+    <div class="wrap about-grid">
+      <div class="about-photo">
+        <img src="https://images.pexels.com/photos/4944980/pexels-photo-4944980.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Professora acompanhando aluna durante o treino">
+      </div>
+      <div>
+        <div class="eyebrow">Sobre a Fórmula Fit</div>
+        <h2>Uma academia que entende o corpo e a rotina da mulher</h2>
+        <p style="margin-top:14px; color:var(--muted); font-size:16px; line-height:1.65; max-width:50ch;">
+          Nossa meta é o seu objetivo. Cada aluna entra com uma fórmula diferente — peso, energia, autoestima, performance — e sai daqui com um plano de treino construído pra essa meta específica, com professoras presentes em cada etapa.
+        </p>
+        <div class="about-list">
+          <div class="about-item">
+            <span class="dot">01</span>
+            <div>
+              <h3>Avaliação física completa</h3>
+              <p>Ponto de partida claro pra montar o seu treino com segurança.</p>
+            </div>
+          </div>
+          <div class="about-item">
+            <span class="dot">02</span>
+            <div>
+              <h3>Ficha de treino individual</h3>
+              <p>Ajustada por fase, objetivo e evolução — não é treino genérico.</p>
+            </div>
+          </div>
+          <div class="about-item">
+            <span class="dot">03</span>
+            <div>
+              <h3>Ambiente pensado pra você</h3>
+              <p>Espaço acolhedor, sem julgamento, do primeiro dia ao resultado.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODALIDADES -->
+  <section class="section" id="modalidades" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">O que você treina aqui</div>
+        <h2>Modalidades</h2>
+        <p>Estrutura completa pra cada fase do seu objetivo — confirme com a gente quais modalidades estão ativas na unidade.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-photo"><img src="https://images.pexels.com/photos/3931298/pexels-photo-3931298.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Musculação"></div>
+          <div class="card-body">
+            <h3>Musculação</h3>
+            <p>Treino de força com acompanhamento técnico, do iniciante ao avançado.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-photo"><img src="https://images.pexels.com/photos/14599068/pexels-photo-14599068.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Treino funcional"></div>
+          <div class="card-body">
+            <h3>Treino Funcional</h3>
+            <p>Aulas dinâmicas em grupo pra ganhar resistência, mobilidade e disposição.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-photo"><img src="https://images.pexels.com/photos/9943223/pexels-photo-9943223.jpeg?auto=compress&cs=tinysrgb&w=700" alt="HIIT e queima"></div>
+          <div class="card-body">
+            <h3>HIIT / Queima</h3>
+            <p>Treinos intervalados de alta intensidade pra acelerar resultado.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-photo"><img src="https://images.pexels.com/photos/8520379/pexels-photo-8520379.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Treino personalizado"></div>
+          <div class="card-body">
+            <h3>Treino Personalizado</h3>
+            <p>Acompanhamento individual com professora dedicada ao seu plano.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-photo"><img src="https://images.pexels.com/photos/13106575/pexels-photo-13106575.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Avaliação física"></div>
+          <div class="card-body">
+            <h3>Avaliação Física</h3>
+            <p>Medição de progresso periódica pra ajustar o treino com precisão.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-photo"><img src="https://images.pexels.com/photos/34103469/pexels-photo-34103469.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Acompanhamento nutricional"></div>
+          <div class="card-body">
+            <h3>Acompanhamento Nutricional <span class="placeholder" title="Confirmar se esse serviço existe na academia">*confirmar</span></h3>
+            <p>Parceria com nutricionista pra alinhar treino e alimentação.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANOS -->
+  <section class="section" id="planos" style="background:var(--bg-soft);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Monte sua fórmula</div>
+        <h2>Planos</h2>
+        <p>Valores ainda não confirmados — os números abaixo são só de exemplo pra montar o layout. Me manda a tabela real que eu atualizo certinho.</p>
+      </div>
+      <div class="plans-grid">
+        <div class="plan">
+          <h3>Mensal</h3>
+          <div class="price placeholder" title="Valor de exemplo">R$ XX<span>/mês</span></div>
+          <ul>
+            <li>Acesso à musculação</li>
+            <li>1 avaliação física</li>
+            <li>Ficha de treino inicial</li>
+          </ul>
+          <a href="#" class="btn btn-ghost">Quero esse plano</a>
+        </div>
+        <div class="plan is-featured">
+          <h3>Trimestral</h3>
+          <div class="price placeholder" title="Valor de exemplo">R$ XX<span>/mês</span></div>
+          <ul>
+            <li>Acesso à musculação + funcional</li>
+            <li>Avaliação física a cada mês</li>
+            <li>Ajuste de treino periódico</li>
+            <li>Prioridade nas aulas em grupo</li>
+          </ul>
+          <a href="#" class="btn btn-primary">Quero esse plano</a>
+        </div>
+        <div class="plan">
+          <h3>Anual</h3>
+          <div class="price placeholder" title="Valor de exemplo">R$ XX<span>/mês</span></div>
+          <ul>
+            <li>Acesso completo a todas as modalidades</li>
+            <li>Acompanhamento contínuo</li>
+            <li>Maior desconto no plano</li>
+          </ul>
+          <a href="#" class="btn btn-ghost">Quero esse plano</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="section" id="depoimentos">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Quem treina, recomenda</div>
+        <h2>Depoimentos</h2>
+        <p class="placeholder" title="Substituir por depoimentos reais de alunas">Depoimentos de exemplo — trocar pelos relatos reais das alunas (print do story ou texto autorizado).</p>
+      </div>
+      <div class="testi-grid">
+        <div class="testi">
+          <p class="quote">"Em poucos meses já senti diferença na disposição do dia a dia. O acompanhamento faz toda diferença."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">A</div>
+            <div><div class="name">Aluna — [nome]</div><div class="role">há 6 meses na Fórmula Fit</div></div>
+          </div>
+        </div>
+        <div class="testi">
+          <p class="quote">"Nunca me senti julgada aqui. As professoras explicam tudo com paciência, mesmo no início."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">A</div>
+            <div><div class="name">Aluna — [nome]</div><div class="role">há 1 ano na Fórmula Fit</div></div>
+          </div>
+        </div>
+        <div class="testi">
+          <p class="quote">"O treino é montado pra mim mesmo, não é uma ficha genérica. Isso mudou meu resultado."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">A</div>
+            <div><div class="name">Aluna — [nome]</div><div class="role">há 3 meses na Fórmula Fit</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO / LOCALIZAÇÃO -->
+  <section class="section contact" id="contato">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="eyebrow">Vem treinar com a gente</div>
+        <h2 style="font-size:clamp(28px,4vw,40px); margin-top:10px;">Localização &amp; contato</h2>
+        <div style="margin-top:24px;">
+          <div class="info-row">
+            <span class="ico">📍</span>
+            <div><h3>Endereço</h3><p class="placeholder" title="Inserir endereço completo">[Rua, número, bairro — Recreio/Laranjal/Leopoldina, MG]</p></div>
+          </div>
+          <div class="info-row">
+            <span class="ico">🕒</span>
+            <div><h3>Horário de funcionamento</h3><p class="placeholder" title="Inserir horário real">[Seg a sex 05h–22h · Sáb 08h–12h — confirmar]</p></div>
+          </div>
+          <div class="info-row">
+            <span class="ico">💬</span>
+            <div><h3>WhatsApp</h3><p class="placeholder" title="Inserir número real">[(32) 9XXXX-XXXX — inserir]</p></div>
+          </div>
+          <div class="info-row">
+            <span class="ico">📷</span>
+            <div><h3>Instagram</h3><p>@formulafitff</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="map-box">
+        <span class="pin">📍</span>
+        <span class="lbl">Mapa será inserido aqui<br>(endereço + embed do Google Maps)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="final-cta">
+    <div class="wrap">
+      <h2>Sua fórmula começa com o primeiro treino.</h2>
+      <p>Fale com a gente agora e garanta sua avaliação.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary">💬 Matricule-se no WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#topo" class="logo">FÓRMULA<span>FIT</span></a>
+        <p>Academia especialista em treino feminino. Nossa meta é o seu objetivo.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Site</h4>
+          <a href="#sobre">Sobre</a>
+          <a href="#modalidades">Modalidades</a>
+          <a href="#planos">Planos</a>
+          <a href="#depoimentos">Alunas</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <a href="https://instagram.com/formulafitff" target="_blank" rel="noopener">Instagram</a>
+          <a href="#contato">Localização</a>
+          <a href="#" class="placeholder" title="Inserir link do WhatsApp">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Fórmula Fit. Todos os direitos reservados.</span>
+      <span>Site por TechBild</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var burger = document.getElementById('burgerBtn');
+    var panel = document.getElementById('mobilePanel');
+    if(!burger || !panel) return;
+    burger.addEventListener('click', function(){
+      var isOpen = panel.classList.toggle('open');
+      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        panel.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
